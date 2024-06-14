@@ -193,12 +193,28 @@ namespace pacmanGame
             Refresh();
         }
 
-        private void resetGame()
+        public void resetGame()
         {
             score = 0;
 
             scoreLabel.Text = $"SCORE: {score}";
 
+            isGameOver = false;
+
+
+            gameTimer.Start();
+
+            foreach(Control x in this.Controls)
+            {
+                if (x is PictureBox)
+                {
+                    x.Visible = true;
+                }
+            }
+        }
+
+        public void LowDifficulty()
+        {
             isGameOver = false;
 
             pacman.Left = 21;
@@ -212,19 +228,9 @@ namespace pacmanGame
 
             pinkGhost.Left = 457;
             pinkGhost.Top = 476;
-
-            gameTimer.Start();
-
-            foreach(Control x in this.Controls)
-            {
-                if (x is PictureBox)
-                {
-                    x.Visible = true;
-                }
-            }
         }
 
-        private void gameOver(string message)
+        public void gameOver(string message)
         {
             gameTimer.Stop();
 
