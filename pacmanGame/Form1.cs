@@ -22,7 +22,7 @@ namespace pacmanGame
 
         bool isGameOver;
 
-        int pacmanSpeed = 10;
+        int pacmanSpeed = 8;
         int score;
         int orangeGhostSpeed;
         int redGhostSpeed;
@@ -31,6 +31,7 @@ namespace pacmanGame
         List<PictureBox> ghostXList = new List<PictureBox>();
         List<PictureBox> ghostYList = new List<PictureBox>();
 
+        int Level1Scores = Array.IndexOf()
 
         public Form1()
         {
@@ -96,6 +97,42 @@ namespace pacmanGame
         private void gameTimer_Tick(object sender, EventArgs e)
         {
 
+            PlayerMovement();
+            PlayerIntersections();
+            CheckForWin();
+
+
+            //ghost movement
+            
+
+                scoreLabel.Text = $"SCORE: {score}";
+
+            Refresh();
+        }
+
+        public void resetGame()
+        {
+            score = 0;
+
+            scoreLabel.Text = $"SCORE: {score}";
+
+            isGameOver = false;
+
+
+            gameTimer.Start();
+
+            foreach(Control x in this.Controls)
+            {
+                if (x is PictureBox)
+                {
+                    x.Visible = true;
+                }
+            }
+        }
+        
+
+        public void PlayerMovement()
+        {
             //move player
             if (wPressed == true)
             {
@@ -137,10 +174,11 @@ namespace pacmanGame
             {
                 pacman.Top = -30;
             }
-
-
+        }
+        public void PlayerIntersections()
+        {
             //intersects with coin
-            foreach(Control x in this.Controls)
+            foreach (Control x in this.Controls)
             {
                 if ((string)x.Tag == "coin")
                 {
@@ -177,43 +215,17 @@ namespace pacmanGame
                     }
                 }
             }
-
+        }
+        public void CheckForWin()
+        {
             //check if won
             if (score == 50)
             {
                 gameOver("YOU WIN!");
             }
-
-
-            //ghost movement
-            
-
-                scoreLabel.Text = $"SCORE: {score}";
-
-            Refresh();
         }
 
-        public void resetGame()
-        {
-            score = 0;
-
-            scoreLabel.Text = $"SCORE: {score}";
-
-            isGameOver = false;
-
-
-            gameTimer.Start();
-
-            foreach(Control x in this.Controls)
-            {
-                if (x is PictureBox)
-                {
-                    x.Visible = true;
-                }
-            }
-        }
-
-        public void LowDifficulty()
+        public void EasyLevel()
         {
             isGameOver = false;
 
@@ -228,6 +240,18 @@ namespace pacmanGame
 
             pinkGhost.Left = 457;
             pinkGhost.Top = 476;
+
+            wall1.Left = 125;
+            wall1.Top = 0;
+
+            wall2.Left = 439;
+            wall2.Top = 0;
+
+            wall3.Left = 202;
+            wall3.Top = 422;
+
+            wall3.Left = 517;
+            wall3.Top = 422;
         }
 
         public void gameOver(string message)
