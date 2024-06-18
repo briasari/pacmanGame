@@ -12,6 +12,7 @@ namespace pacmanGame
 {
     public partial class Form1 : Form
     {
+        //control variables
         bool wPressed = false;
         bool aPressed = false;
         bool sPressed = false;
@@ -22,16 +23,20 @@ namespace pacmanGame
 
         bool isGameOver;
 
+        //game ints
         int pacmanSpeed = 8;
         int score;
         int orangeGhostSpeed;
         int redGhostSpeed;
         int pinkGhostSpeed;
 
-        List<PictureBox> ghostXList = new List<PictureBox>();
-        List<PictureBox> ghostYList = new List<PictureBox>();
+        //array to keep high scores
+        int[] Level1Scores = new int[10];
+        int[] Level2Scores = new int[10];
+        int[] Level3Scores = new int[10];
 
-        int Level1Scores = Array.IndexOf()
+        //randgen for ghost speeds
+        Random randGen = new Random();
 
         public Form1()
         {
@@ -100,7 +105,7 @@ namespace pacmanGame
             PlayerMovement();
             PlayerIntersections();
             CheckForWin();
-
+            GhostMovement();
 
             //ghost movement
             
@@ -222,6 +227,79 @@ namespace pacmanGame
             if (score == 50)
             {
                 gameOver("YOU WIN!");
+            }
+        }
+
+        public void GhostMovement()
+        {
+            orangeGhost.Left = orangeGhost.Left + orangeGhostSpeed;
+            pinkGhost.Left = pinkGhost.Left + pinkGhostSpeed;
+            redGhost.Left = redGhost.Left + redGhostSpeed;
+
+            if (orangeGhostSpeed == 0)
+            {
+                orangeGhostSpeed = randGen.Next(0, 10);
+            }
+
+            if (pinkGhostSpeed == 0)
+            {
+                pinkGhostSpeed = randGen.Next(0, 10);
+            }
+
+            if (redGhostSpeed == 0)
+            {
+                redGhostSpeed = randGen.Next(0, 10);
+            }
+
+            //orange ghost movement
+            //appear on other side (left and right)
+            if (orangeGhost.Left < -30)
+            {
+                orangeGhost.Left = 680;
+            }
+            if (orangeGhost.Left > 680)
+            {
+                orangeGhost.Left = -30;
+            }
+
+            //pink ghost movement
+            foreach (Control x in this.Controls)
+            {
+                if ((string)x.Tag == "wall")
+                {
+                    if (pinkGhost.Bounds.IntersectsWith(x.Bounds))
+                    {
+                        pinkGhostSpeed = -pinkGhostSpeed;
+                        if (pinkGhostSpeed < 0)
+                        {
+                            pinkGhostSpeed = -randGen.Next(1, 10);
+                        }
+                        else
+                        {
+                            pinkGhostSpeed = randGen.Next(1, 10);
+                        }
+                    }
+                }
+            }
+
+            //red ghost movement
+            foreach (Control x in this.Controls)
+            {
+                if ((string)x.Tag == "wall")
+                {
+                    if (redGhost.Bounds.IntersectsWith(x.Bounds))
+                    {
+                        redGhostSpeed = -redGhostSpeed;
+                        if (redGhostSpeed < 0)
+                        {
+                            redGhostSpeed = -randGen.Next(1, 10);
+                        }
+                        else
+                        {
+                            redGhostSpeed = randGen.Next(1, 10);
+                        }
+                    }
+                }
             }
         }
 
