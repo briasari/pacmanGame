@@ -105,12 +105,9 @@ namespace pacmanGame
             PlayerMovement();
             PlayerIntersections();
             CheckForWin();
-            GhostMovement();
+            GhostMovement();            
 
-            //ghost movement
-            
-
-                scoreLabel.Text = $"SCORE: {score}";
+            scoreLabel.Text = $"SCORE: {score}";
 
             Refresh();
         }
@@ -229,9 +226,11 @@ namespace pacmanGame
                 gameOver("YOU WIN!");
             }
         }
-
         public void GhostMovement()
         {
+            int redGhostX = redGhost.Location.X;
+            int pinkGhostX = pinkGhost.Location.X;
+
             orangeGhost.Left = orangeGhost.Left + orangeGhostSpeed;
             pinkGhost.Left = pinkGhost.Left + pinkGhostSpeed;
             redGhost.Left = redGhost.Left + redGhostSpeed;
@@ -252,14 +251,11 @@ namespace pacmanGame
             }
 
             //orange ghost movement
-            //appear on other side (left and right)
-            if (orangeGhost.Left < -30)
-            {
-                orangeGhost.Left = 680;
-            }
+            //appear on other side (right)
             if (orangeGhost.Left > 680)
             {
                 orangeGhost.Left = -30;
+                orangeGhostSpeed = randGen.Next(1, 10);
             }
 
             //pink ghost movement
@@ -270,6 +266,7 @@ namespace pacmanGame
                     if (pinkGhost.Bounds.IntersectsWith(x.Bounds))
                     {
                         pinkGhostSpeed = -pinkGhostSpeed;
+                        pinkGhost.Left = pinkGhostX;
                         if (pinkGhostSpeed < 0)
                         {
                             pinkGhostSpeed = -randGen.Next(1, 10);
@@ -290,6 +287,7 @@ namespace pacmanGame
                     if (redGhost.Bounds.IntersectsWith(x.Bounds))
                     {
                         redGhostSpeed = -redGhostSpeed;
+                        redGhost.Left = redGhostX;
                         if (redGhostSpeed < 0)
                         {
                             redGhostSpeed = -randGen.Next(1, 10);
