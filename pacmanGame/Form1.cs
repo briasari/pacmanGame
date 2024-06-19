@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Threading;
+using System.Media;
 
 namespace pacmanGame
 {
@@ -104,13 +106,17 @@ namespace pacmanGame
 
         private void gameTimer_Tick(object sender, EventArgs e)
         {
-
             PlayerMovement();
             PlayerIntersections();
             CheckForWin();
             GhostMovement();
 
             scoreLabel.Text = $"SCORE: {score}";
+
+            if (wPressed == true)
+            {
+                screenNum++;
+            }
 
             Refresh();
         }
@@ -299,7 +305,6 @@ namespace pacmanGame
                 }
             }
         }
-
         public void EasyLevel()
         {
             scoreLabel.Left = 13;
@@ -508,46 +513,76 @@ namespace pacmanGame
 
         public void ScreenChange()
         {
-            if (spacePressed)
+            label1.Text = $"{screenNum}";
+
+            
+
+            if (screenNum < 2)
             {
-                screenNum++;
-            }
-            subtitleLabel.Text = "PRESS SPACE TO PROCEED\nOR PRESS ESC TO EXIT";
-            if (spacePressed == true && screenNum == 0)
-            {
-                screenNum = 1;
-            }
-            if (screenNum == 1)
-            {
-                titleLabel.Left = 2;
-                titleLabel.Top = 3;
-
-                subtitleLabel.Left = 162;
-                subtitleLabel.Top = 110;
-
-                subtitleLabel.Text = "LEVEL SELECTION";
-
-                easyLabel.Visible = true;
-                mediumLabel.Visible = true;
-                hardLabel.Visible = true;
-
-                easyButton.Visible = true;
-                mediumButton.Visible = true;
-                hardButton.Visible = true;
-            }
-            if (spacePressed == true && screenNum == 2)
-            {
-                screenNum = 3;
-
-                if (screenNum == 3)
+                if (spacePressed)
                 {
+                    screenNum++;
+                    Thread.Sleep(200);
+                }
+            }
+
+            switch (screenNum)
+            {
+                case 0:
+                    break;
+
+                case 1:
+                    titleLabel.Left = 2;
+                    titleLabel.Top = 3;
+
+                    subtitleLabel.Left = 162;
+                    subtitleLabel.Top = 110;
+
+                    titleLabel.Text = "BEFORE YOU BEGIN:";
+                    instructionLabel.Visible = true;
+                    subtitleLabel.Top = 500;
+                    break;
+
+                case 2:
+                    titleLabel.Text = "LEVEL SELECTION";
+                    subtitleLabel.Text = "PRESS SPACE TO PROCEED\nOR PRESS ESC TO EXIT";
+                    instructionLabel.Visible = false;
+
+                    easyLabel.Visible = true;
+                    mediumLabel.Visible = true;
+                    hardLabel.Visible = true;
+
+                    easyButton.Visible = true;
+                    mediumButton.Visible = true;
+                    hardButton.Visible = true;
+                    break;
+
+                case 3:
                     instructionLabel.Visible = false;
                     titleLabel.Visible = false;
                     subtitleLabel.Visible = false;
 
-                    resetGame();
-                    EasyLevel();
-                }
+                    easyLabel.Visible = false;
+                    mediumLabel.Visible = false;
+                    hardLabel.Visible = false;
+
+                    easyButton.Visible = false;
+                    mediumButton.Visible = false;
+                    hardButton.Visible = false;
+
+                    
+                    if (screenNum == 3 && gameTimer.Enabled == false)
+                    {
+                        gameTimer.Enabled = true;
+                        resetGame();
+                        EasyLevel();
+                    }
+                    break;
+                case 4:
+                    
+                    break;
+
+                    
             }
 
             if (escapePressed == true)
@@ -556,30 +591,15 @@ namespace pacmanGame
             }
         }
 
-        private void easyButton_Click(object sender, EventArgs e)
+        public void easyButton_Click(object sender, EventArgs e)
         {
-            screenNum = 2;
-
-            if (screenNum == 2)
-            {
-                titleLabel.Text = "BEFORE YOU BEGIN:";
-                instructionLabel.Visible = true;
-                subtitleLabel.Top = 500;
-
-                easyLabel.Visible = false;
-                mediumLabel.Visible = false;
-                hardLabel.Visible = false;
-
-                easyButton.Visible = false;
-                mediumButton.Visible = false;
-                hardButton.Visible = false;
-            }
+            screenNum++;
         }
-            private void backgroundTimer_Tick(object sender, EventArgs e)
-            {
-                ScreenChange();
+        private void backgroundTimer_Tick(object sender, EventArgs e)
+        {
+            ScreenChange();
 
-                Refresh();
-            }
+            Refresh();
         }
     }
+}

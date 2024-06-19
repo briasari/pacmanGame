@@ -101,6 +101,7 @@
             this.hardLabel = new System.Windows.Forms.Label();
             this.backgroundTimer = new System.Windows.Forms.Timer(this.components);
             this.instructionLabel = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.coin8)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.coin7)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.coin6)).BeginInit();
@@ -998,12 +999,23 @@
             this.instructionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.instructionLabel.Visible = false;
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.label1.Location = new System.Drawing.Point(122, 13);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(35, 13);
+            this.label1.TabIndex = 70;
+            this.label1.Text = "label1";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(700, 600);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.instructionLabel);
             this.Controls.Add(this.hardLabel);
             this.Controls.Add(this.mediumLabel);
@@ -1138,6 +1150,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.coin22)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.coin50)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -1214,6 +1227,7 @@
         private System.Windows.Forms.Label hardLabel;
         private System.Windows.Forms.Timer backgroundTimer;
         private System.Windows.Forms.Label instructionLabel;
+        private System.Windows.Forms.Label label1;
     }
 }
 
