@@ -674,6 +674,8 @@ namespace pacmanGame
 
                     leaderboardLabel.Visible = true;
 
+                    Level1Scores.Sort();
+
                     if(difficulty == "easy")
                     {
                         leaderboardLabel.Text = $"THE CURRENT THREE LOWEST\nTIMES FOR THE EASY LEVEL ARE:\n\n{Level1Scores[1]}\n{Level1Scores[2]}\n{Level1Scores[3]}";
