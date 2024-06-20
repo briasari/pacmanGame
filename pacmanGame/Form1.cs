@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Threading;
 using System.Media;
+using System.Diagnostics;
 
 namespace pacmanGame
 {
@@ -31,17 +32,24 @@ namespace pacmanGame
         int orangeGhostSpeed;
         int redGhostSpeed;
         int pinkGhostSpeed;
+        int attempts;
 
         //array to keep high scores
-        double[] Level1Scores = new double[10];
-        double[] Level2Scores = new double[10];
-        double[] Level3Scores = new double[10];
+        List<double> Level1Scores = new List<double>();
+        List<double> Level2Scores = new List<double>();
+        List<double> Level3Scores = new List<double>();
 
         //randgen for ghost speeds
         Random randGen = new Random();
 
         //screen number
         int screenNum = 0;
+
+        //score timer
+        Stopwatch scoreTimer = new Stopwatch();
+
+        //string to hold difficulty
+        string difficulty;
 
         public Form1()
         {
@@ -76,7 +84,6 @@ namespace pacmanGame
                     break;
             }
         }
-
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
             switch (e.KeyCode)
@@ -103,7 +110,6 @@ namespace pacmanGame
                     break;
             }
         }
-
         private void gameTimer_Tick(object sender, EventArgs e)
         {
             PlayerMovement();
@@ -113,14 +119,8 @@ namespace pacmanGame
 
             scoreLabel.Text = $"SCORE: {score}";
 
-            if (wPressed == true)
-            {
-                screenNum++;
-            }
-
             Refresh();
         }
-
         public void resetGame()
         {
             score = 0;
@@ -129,6 +129,18 @@ namespace pacmanGame
 
             isGameOver = false;
 
+            if (difficulty == "easy")
+            {
+                EasyLevel();
+            }
+            if (difficulty == "medium")
+            {
+                //MediumLevel();
+            }
+            if (difficulty == "hard")
+            {
+                //HardLevel();
+            }
 
             foreach (Control x in this.Controls)
             {
@@ -229,6 +241,10 @@ namespace pacmanGame
             if (score == 50)
             {
                 gameOver("YOU WIN!");
+                scoreTimer.Stop();
+                
+
+                //Level1Scores.Add(scoreTimer.Elapsed(@"ss\:ff"));
             }
         }
         public void GhostMovement()
@@ -495,27 +511,27 @@ namespace pacmanGame
             coin49.Left = 647;
             coin49.Top = 556;
         }
-
-
         public void gameOver(string message)
         {
             gameTimer.Stop();
 
             if (message == "YOU WIN!")
             {
-                winLoseLabel.Text = "YOU WIN!";
+                titleLabel.Text = "YOU WIN!";
+                screenNum = 5;
             }
             if (message == "YOU LOSE!")
             {
-                winLoseLabel.Text = "YOU LOSE!";
+                titleLabel.Text = "YOU LOSE!";
+                screenNum = 4;
             }
         }
 
         public void ScreenChange()
         {
-            label1.Text = $"{screenNum}";
+            timeLabel.Text = screenNum + "";
+            timeLabel.Text = scoreTimer.Elapsed.ToString(@"ss\:ff");
 
-            
 
             if (screenNum < 2)
             {
@@ -528,10 +544,14 @@ namespace pacmanGame
 
             switch (screenNum)
             {
-                case 0:
+                case 0: //opening screen
+                    if (escapePressed == true)
+                    {
+                        Application.Exit();
+                    }
                     break;
 
-                case 1:
+                case 1: //rules screen
                     titleLabel.Left = 2;
                     titleLabel.Top = 3;
 
@@ -543,7 +563,7 @@ namespace pacmanGame
                     subtitleLabel.Top = 500;
                     break;
 
-                case 2:
+                case 2: //level selection screen
                     titleLabel.Text = "LEVEL SELECTION";
                     subtitleLabel.Text = "PRESS SPACE TO PROCEED\nOR PRESS ESC TO EXIT";
                     instructionLabel.Visible = false;
@@ -557,7 +577,9 @@ namespace pacmanGame
                     hardButton.Visible = true;
                     break;
 
-                case 3:
+                case 3: //easy level screen
+
+                    score = 50;
                     instructionLabel.Visible = false;
                     titleLabel.Visible = false;
                     subtitleLabel.Visible = false;
@@ -570,30 +592,112 @@ namespace pacmanGame
                     mediumButton.Visible = false;
                     hardButton.Visible = false;
 
-                    
                     if (screenNum == 3 && gameTimer.Enabled == false)
                     {
-                        gameTimer.Enabled = true;
-                        resetGame();
-                        EasyLevel();
+                        
+                        if (attempts == 0)
+                        {
+                            attempts = 1;
+                            scoreTimer.Start();
+                            this.Focus();
+                            gameTimer.Enabled = true;
+                            resetGame();
+                            EasyLevel();
+                        }
+                        if (attempts > 0)
+                        {
+                            this.Focus();
+                            gameTimer.Enabled = true;
+                            resetGame();
+                            EasyLevel();
+                        }
                     }
                     break;
-                case 4:
-                    
+
+                case 4: //loss screen
+                    titleLabel.Visible = true;
+                    subtitleLabel.Visible = true;
+
+                    subtitleLabel.Text = "PRESS SPACE TO RETRY\nOR PRESS ESC TO RETURN TO MAIN MENU";
+
+                    titleLabel.Left = 17;
+                    titleLabel.Top = 200;
+
+                    subtitleLabel.Left = 162;
+                    subtitleLabel.Top = 330;
+
+                    if (spacePressed == true)
+                    {
+                        if (difficulty == "easy")
+                        {
+                            resetGame();
+                            EasyLevel();
+                            screenNum = 3;
+                        }
+                        if (difficulty == "medium")
+                        {
+                            resetGame();
+                            //MediumLevel();
+                        }
+                        if (difficulty == "hard")
+                        {
+                            resetGame();
+                            //HardLevel();
+                        }
+                    }
                     break;
 
-                    
-            }
+                case 5: //win screen
+                    titleLabel.Visible = true;
+                    subtitleLabel.Visible = true;
 
-            if (escapePressed == true)
-            {
-                Application.Exit();
+                    subtitleLabel.Text = "PRESS SPACE TO VIEW THE CURRENT HIGHSCORE\nOR PRESS ESC TO RETURN TO MAIN MENU";
+
+                    titleLabel.Left = 17;
+                    titleLabel.Top = 200;
+
+                    subtitleLabel.Left = 162;
+                    subtitleLabel.Top = 330;
+
+                    if (spacePressed == true)
+                    {
+                        screenNum = 6;
+                    }
+
+                    if (escapePressed == true)
+                    {
+                        screenNum = 0;
+                    }
+                    break;
+
+                case 6: //leaderboard
+
+                    leaderboardLabel.Visible = true;
+
+                    if(difficulty == "easy")
+                    {
+                        leaderboardLabel.Text = $"THE CURRENT THREE LOWEST\nTIMES FOR THE EASY LEVEL ARE:\n\n{Level1Scores[1]}\n{Level1Scores[2]}\n{Level1Scores[3]}";
+                    }
+                    
+
+                    break;
+
+                    if (attempts < 0)
+                    {
+                        if (spacePressed == true && scoreTimer.IsRunning == true && gameTimer.Enabled == false)
+                        {
+                            attempts++;
+                            Thread.Sleep(100);
+                        }
+                    }
+
             }
         }
 
         public void easyButton_Click(object sender, EventArgs e)
         {
             screenNum++;
+            difficulty = "easy";
         }
         private void backgroundTimer_Tick(object sender, EventArgs e)
         {

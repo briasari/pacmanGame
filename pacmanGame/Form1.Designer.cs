@@ -89,7 +89,6 @@
             this.coin21 = new System.Windows.Forms.PictureBox();
             this.gameTimer = new System.Windows.Forms.Timer(this.components);
             this.coin22 = new System.Windows.Forms.PictureBox();
-            this.winLoseLabel = new System.Windows.Forms.Label();
             this.coin50 = new System.Windows.Forms.PictureBox();
             this.titleLabel = new System.Windows.Forms.Label();
             this.subtitleLabel = new System.Windows.Forms.Label();
@@ -101,7 +100,8 @@
             this.hardLabel = new System.Windows.Forms.Label();
             this.backgroundTimer = new System.Windows.Forms.Timer(this.components);
             this.instructionLabel = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
+            this.timeLabel = new System.Windows.Forms.Label();
+            this.leaderboardLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.coin8)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.coin7)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.coin6)).BeginInit();
@@ -859,16 +859,6 @@
             this.coin22.Tag = "coin";
             this.coin22.Visible = false;
             // 
-            // winLoseLabel
-            // 
-            this.winLoseLabel.BackColor = System.Drawing.Color.Transparent;
-            this.winLoseLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.winLoseLabel.ForeColor = System.Drawing.Color.White;
-            this.winLoseLabel.Location = new System.Drawing.Point(690, -4);
-            this.winLoseLabel.Name = "winLoseLabel";
-            this.winLoseLabel.Size = new System.Drawing.Size(166, 23);
-            this.winLoseLabel.TabIndex = 59;
-            // 
             // coin50
             // 
             this.coin50.BackColor = System.Drawing.Color.Transparent;
@@ -999,15 +989,27 @@
             this.instructionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.instructionLabel.Visible = false;
             // 
-            // label1
+            // timeLabel
             // 
-            this.label1.AutoSize = true;
-            this.label1.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.label1.Location = new System.Drawing.Point(122, 13);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(35, 13);
-            this.label1.TabIndex = 70;
-            this.label1.Text = "label1";
+            this.timeLabel.AutoSize = true;
+            this.timeLabel.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.timeLabel.Location = new System.Drawing.Point(653, 9);
+            this.timeLabel.Name = "timeLabel";
+            this.timeLabel.Size = new System.Drawing.Size(0, 13);
+            this.timeLabel.TabIndex = 70;
+            // 
+            // leaderboardLabel
+            // 
+            this.leaderboardLabel.BackColor = System.Drawing.Color.Transparent;
+            this.leaderboardLabel.Font = new System.Drawing.Font("Consolas", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.leaderboardLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+            this.leaderboardLabel.Location = new System.Drawing.Point(17, 119);
+            this.leaderboardLabel.Name = "leaderboardLabel";
+            this.leaderboardLabel.Size = new System.Drawing.Size(662, 368);
+            this.leaderboardLabel.TabIndex = 71;
+            this.leaderboardLabel.Text = "THE CURRENT FASTEST TIME IS:";
+            this.leaderboardLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.leaderboardLabel.Visible = false;
             // 
             // Form1
             // 
@@ -1015,7 +1017,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(700, 600);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.leaderboardLabel);
+            this.Controls.Add(this.timeLabel);
             this.Controls.Add(this.instructionLabel);
             this.Controls.Add(this.hardLabel);
             this.Controls.Add(this.mediumLabel);
@@ -1029,7 +1032,6 @@
             this.Controls.Add(this.orangeGhost);
             this.Controls.Add(this.pacman);
             this.Controls.Add(this.wall1);
-            this.Controls.Add(this.winLoseLabel);
             this.Controls.Add(this.pinkGhost);
             this.Controls.Add(this.redGhost);
             this.Controls.Add(this.coin18);
@@ -1215,10 +1217,7 @@
         private System.Windows.Forms.PictureBox coin21;
         private System.Windows.Forms.Timer gameTimer;
         private System.Windows.Forms.PictureBox coin22;
-        private System.Windows.Forms.Label winLoseLabel;
         private System.Windows.Forms.PictureBox coin50;
-        private System.Windows.Forms.Label titleLabel;
-        private System.Windows.Forms.Label subtitleLabel;
         private System.Windows.Forms.Button easyButton;
         private System.Windows.Forms.Button mediumButton;
         private System.Windows.Forms.Button hardButton;
@@ -1227,7 +1226,10 @@
         private System.Windows.Forms.Label hardLabel;
         private System.Windows.Forms.Timer backgroundTimer;
         private System.Windows.Forms.Label instructionLabel;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label timeLabel;
+        private System.Windows.Forms.Label titleLabel;
+        private System.Windows.Forms.Label subtitleLabel;
+        private System.Windows.Forms.Label leaderboardLabel;
     }
 }
 
