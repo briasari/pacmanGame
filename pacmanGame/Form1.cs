@@ -33,12 +33,9 @@ namespace pacmanGame
         int redGhostSpeed;
         int pinkGhostSpeed;
         int attempts;
-        int highscore;
 
         //array to keep high scores
         List<string> Level1Scores = new List<string>();
-        List<double> Level2Scores = new List<double>();
-        List<double> Level3Scores = new List<double>();
 
         //randgen for ghost speeds
         Random randGen = new Random();
@@ -243,7 +240,7 @@ namespace pacmanGame
         public void CheckForWin()
         {
             //check if won
-            if (score == 1)
+            if (score == 50)
             {
                 gameOver("YOU WIN!");
                 scoreTimer.Stop();
@@ -515,6 +512,194 @@ namespace pacmanGame
             coin49.Left = 647;
             coin49.Top = 556;
         }
+        public void EverythingOffScreen()
+        {
+            scoreLabel.Left = 1000;
+            scoreLabel.Top = 1000;
+
+            pacman.Left = 1000;
+            pacman.Top = 1000;
+
+            redGhost.Left = 1000;
+            redGhost.Top = 1000;
+
+            orangeGhost.Left = 1000;
+            orangeGhost.Top = 1000;
+
+            pinkGhost.Left = 1000;
+            pinkGhost.Top = 1000;
+
+            wall1.Left = 1000;
+            wall1.Top = 1000;
+
+            wall2.Left = 1000;
+            wall2.Top = 1000;
+
+            wall3.Left = 1000;
+            wall3.Top = 1000;
+
+            wall4.Left = 1000;
+            wall4.Top = 1000;
+
+            //coin placements
+
+            //pacman coin
+            coin50.Left = 1000;
+            coin50.Top = 1000;
+
+            //red ghost coins
+            coin1.Left = 1201;
+            coin1.Top = 1008;
+
+            coin2.Left = 1258;
+            coin2.Top = 1008;
+
+            coin3.Left = 1318;
+            coin3.Top = 1008;
+
+            coin4.Left = 1376;
+            coin4.Top = 1008;
+
+            coin5.Left = 1204;
+            coin5.Top = 1042;
+
+            coin6.Left = 1261;
+            coin6.Top = 1042;
+
+            coin7.Left = 1332;
+            coin7.Top = 1042;
+
+            coin8.Left = 1379;
+            coin8.Top = 1042;
+
+            //top right corner
+            coin9.Left = 1521;
+            coin9.Top = 1008;
+
+            coin10.Left = 1582;
+            coin10.Top = 1008;
+
+            coin11.Left = 1639;
+            coin11.Top = 1008;
+
+            coin12.Left = 1521;
+            coin12.Top = 1080;
+
+            coin13.Left = 1582;
+            coin13.Top = 1080;
+
+            coin14.Left = 1639;
+            coin14.Top = 1080;
+
+            coin15.Left = 1521;
+            coin15.Top = 1042;
+
+            coin16.Left = 1582;
+            coin16.Top = 1142;
+
+            coin17.Left = 1639;
+            coin17.Top = 1142;
+
+            //middle row (orange ghost coins)
+            coin18.Left = 1165;
+            coin18.Top = 1286;
+
+            coin19.Left = 1131;
+            coin19.Top = 1286;
+
+            coin20.Left = 1197;
+            coin20.Top = 1286;
+
+            coin21.Left = 1263;
+            coin21.Top = 1286;
+
+            coin22.Left = 1322;
+            coin22.Top = 1286;
+
+            coin23.Left = 1385;
+            coin23.Top = 1286;
+
+            coin24.Left = 1451;
+            coin24.Top = 1286;
+
+            coin25.Left = 1517;
+            coin25.Top = 1286;
+
+            coin26.Left = 1583;
+            coin26.Top = 1286;
+
+            //bottom left corner
+            coin27.Left = 1128;
+            coin27.Top = 1432;
+
+            coin28.Left = 1189;
+            coin28.Top = 1432;
+
+            coin29.Left = 1146;
+            coin29.Top = 1432;
+
+            coin30.Left = 1128;
+            coin30.Top = 1494;
+
+            coin31.Left = 1189;
+            coin31.Top = 1494;
+
+            coin32.Left = 1146;
+            coin32.Top = 1494;
+
+            coin33.Left = 1128;
+            coin33.Top = 1556;
+
+            coin34.Left = 1189;
+            coin34.Top = 1556;
+
+            coin35.Left = 1146;
+            coin35.Top = 1556;
+
+            //pink ghost coins
+            coin36.Left = 1285;
+            coin36.Top = 1432;
+
+            coin37.Left = 1342;
+            coin37.Top = 1432;
+
+            coin38.Left = 1403;
+            coin38.Top = 1432;
+
+            coin39.Left = 1460;
+            coin39.Top = 1432;
+
+            coin40.Left = 1288;
+            coin40.Top = 1556;
+
+            coin41.Left = 1345;
+            coin41.Top = 1556;
+
+            coin42.Left = 1406;
+            coin42.Top = 1556;
+
+            coin43.Left = 1463;
+            coin43.Top = 1556;
+
+            //rightmost coins
+            coin44.Left = 1590;
+            coin44.Top = 1432;
+
+            coin45.Left = 1647;
+            coin45.Top = 1432;
+
+            coin46.Left = 1590;
+            coin46.Top = 1495;
+
+            coin47.Left = 1647;
+            coin47.Top = 1495;
+
+            coin48.Left = 1590;
+            coin48.Top = 1556;
+
+            coin49.Left = 1647;
+            coin49.Top = 1556;
+        }
         public void gameOver(string message)
         {
             gameTimer.Stop();
@@ -555,6 +740,10 @@ namespace pacmanGame
                     break;
 
                 case 1: //rules screen
+                    scoreTimer.Reset();
+
+                    EverythingOffScreen();
+
                     titleLabel.Left = 2;
                     titleLabel.Top = 3;
 
@@ -691,6 +880,8 @@ namespace pacmanGame
 
                 case 6: //leaderboard
 
+                    attempts = 0;
+
                     this.Focus();
 
                     leaderboardLabel.Visible = true;
@@ -701,10 +892,15 @@ namespace pacmanGame
                     {
                         leaderboardLabel.Text = $"THE CURRENT LOWEST\nTIME FOR THE EASY LEVEL IS:\n\n{Level1Scores[0]} (milliseconds)";
                     }
-                    if (spacePressed == true)
-                    {
-                        screenNum = 1;
-                    }
+                    //if (spacePressed == true && gameTimer.Enabled == false)
+                    //{
+                    //    screenNum = 1;
+                    //}
+
+                    Refresh();
+
+                    Thread.Sleep(2000);
+                    screenNum = 1;
 
                     break;
 
