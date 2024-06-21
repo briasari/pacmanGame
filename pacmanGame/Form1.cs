@@ -33,6 +33,7 @@ namespace pacmanGame
         int redGhostSpeed;
         int pinkGhostSpeed;
         int attempts;
+        int highscore;
 
         //array to keep high scores
         List<string> Level1Scores = new List<string>();
@@ -242,7 +243,7 @@ namespace pacmanGame
         public void CheckForWin()
         {
             //check if won
-            if (score == 50)
+            if (score == 1)
             {
                 gameOver("YOU WIN!");
                 scoreTimer.Stop();
@@ -565,13 +566,8 @@ namespace pacmanGame
                     instructionLabel.Visible = true;
                     subtitleLabel.Top = 500;
 
-                    foreach (Control x in this.Controls)
-                    {
-                        if (x is PictureBox)
-                        {
-                            x.Visible = false;
-                        }
-                    }
+                    leaderboardLabel.Visible = false;
+
                     break;
 
                 case 2: //level selection screen
@@ -587,18 +583,10 @@ namespace pacmanGame
                     mediumButton.Visible = true;
                     hardButton.Visible = true;
 
-                    foreach (Control x in this.Controls)
-                    {
-                        if (x is PictureBox)
-                        {
-                            x.Visible = false;
-                        }
-                    }
+                    
                     break;
 
                 case 3: //easy level screen
-
-                    score = 50;
 
                     instructionLabel.Visible = false;
                     titleLabel.Visible = false;
@@ -697,11 +685,13 @@ namespace pacmanGame
 
                     if (escapePressed == true)
                     {
-                        screenNum = 0;
+                        screenNum = 1;
                     }
                     break;
 
                 case 6: //leaderboard
+
+                    this.Focus();
 
                     leaderboardLabel.Visible = true;
 
@@ -709,7 +699,11 @@ namespace pacmanGame
 
                     if (difficulty == "easy")
                     {
-                        leaderboardLabel.Text = $"THE CURRENT THREE LOWEST\nTIMES FOR THE EASY LEVEL ARE:\n\n{Level1Scores[0]}";
+                        leaderboardLabel.Text = $"THE CURRENT LOWEST\nTIME FOR THE EASY LEVEL IS:\n\n{Level1Scores[0]} (milliseconds)";
+                    }
+                    if (spacePressed == true)
+                    {
+                        screenNum = 1;
                     }
 
                     break;
