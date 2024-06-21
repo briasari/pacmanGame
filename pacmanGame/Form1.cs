@@ -35,7 +35,7 @@ namespace pacmanGame
         int attempts;
 
         //array to keep high scores
-        List<double> Level1Scores = new List<double>();
+        List<string> Level1Scores = new List<string>();
         List<double> Level2Scores = new List<double>();
         List<double> Level3Scores = new List<double>();
 
@@ -56,6 +56,10 @@ namespace pacmanGame
             InitializeComponent();
 
             backgroundTimer.Enabled = true;
+
+            //unfinished levels, buttons are disabled
+            mediumButton.Enabled = false;
+            hardButton.Enabled = false;
         }
 
         private void Form1_KeyUp(object sender, KeyEventArgs e)
@@ -242,9 +246,8 @@ namespace pacmanGame
             {
                 gameOver("YOU WIN!");
                 scoreTimer.Stop();
-                
-
-                //Level1Scores.Add(scoreTimer.Elapsed(@"ss\:ff"));
+                //timeLabel.Text = scoreTimer.ElapsedMilliseconds + "";
+                Level1Scores.Add(scoreTimer.ElapsedMilliseconds + "");
             }
         }
         public void GhostMovement()
@@ -526,12 +529,11 @@ namespace pacmanGame
                 screenNum = 4;
             }
         }
-
         public void ScreenChange()
         {
-            timeLabel.Text = screenNum + "";
-            timeLabel.Text = scoreTimer.Elapsed.ToString(@"ss\:ff");
+            //timeLabel.Text = screenNum + "";
 
+            timeLabel.Text = scoreTimer.Elapsed.ToString(@"ss\:ff");
 
             if (screenNum < 2)
             {
@@ -545,7 +547,7 @@ namespace pacmanGame
             switch (screenNum)
             {
                 case 0: //opening screen
-                    if (escapePressed == true)
+                    if (escapePressed == true && screenNum == 0)
                     {
                         Application.Exit();
                     }
@@ -557,10 +559,19 @@ namespace pacmanGame
 
                     subtitleLabel.Left = 162;
                     subtitleLabel.Top = 110;
+                    subtitleLabel.Visible = false;
 
                     titleLabel.Text = "BEFORE YOU BEGIN:";
                     instructionLabel.Visible = true;
                     subtitleLabel.Top = 500;
+
+                    foreach (Control x in this.Controls)
+                    {
+                        if (x is PictureBox)
+                        {
+                            x.Visible = false;
+                        }
+                    }
                     break;
 
                 case 2: //level selection screen
@@ -575,11 +586,20 @@ namespace pacmanGame
                     easyButton.Visible = true;
                     mediumButton.Visible = true;
                     hardButton.Visible = true;
+
+                    foreach (Control x in this.Controls)
+                    {
+                        if (x is PictureBox)
+                        {
+                            x.Visible = false;
+                        }
+                    }
                     break;
 
                 case 3: //easy level screen
 
                     score = 50;
+
                     instructionLabel.Visible = false;
                     titleLabel.Visible = false;
                     subtitleLabel.Visible = false;
@@ -594,7 +614,7 @@ namespace pacmanGame
 
                     if (screenNum == 3 && gameTimer.Enabled == false)
                     {
-                        
+                        //score = 50;
                         if (attempts == 0)
                         {
                             attempts = 1;
@@ -618,7 +638,7 @@ namespace pacmanGame
                     titleLabel.Visible = true;
                     subtitleLabel.Visible = true;
 
-                    subtitleLabel.Text = "PRESS SPACE TO RETRY\nOR PRESS ESC TO RETURN TO MAIN MENU";
+                    subtitleLabel.Text = "PRESS SPACE TO RETRY\nOR PRESS ESC TO RETURN TO LEVEL SELECTION";
 
                     titleLabel.Left = 17;
                     titleLabel.Top = 200;
@@ -638,13 +658,24 @@ namespace pacmanGame
                         {
                             resetGame();
                             //MediumLevel();
+                            //screenNum =
                         }
                         if (difficulty == "hard")
                         {
                             resetGame();
                             //HardLevel();
+                            //screenNum =
                         }
                     }
+
+                    if (escapePressed == true && screenNum == 4)
+                    {
+                        scoreTimer.Restart();
+                        scoreTimer.Stop();
+
+                        screenNum = 1;
+                    }
+
                     break;
 
                 case 5: //win screen
@@ -676,11 +707,10 @@ namespace pacmanGame
 
                     Level1Scores.Sort();
 
-                    if(difficulty == "easy")
+                    if (difficulty == "easy")
                     {
-                        leaderboardLabel.Text = $"THE CURRENT THREE LOWEST\nTIMES FOR THE EASY LEVEL ARE:\n\n{Level1Scores[1]}\n{Level1Scores[2]}\n{Level1Scores[3]}";
+                        leaderboardLabel.Text = $"THE CURRENT THREE LOWEST\nTIMES FOR THE EASY LEVEL ARE:\n\n{Level1Scores[0]}";
                     }
-                    
 
                     break;
 
